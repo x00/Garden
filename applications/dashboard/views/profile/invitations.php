@@ -1,5 +1,6 @@
 <?php if (!defined('APPLICATION')) exit(); ?>
 <h2 class="H"><?php echo T('Invitations'); ?></h2>
+<div class="FormWrapper">
 <?php
 echo $this->Form->Open();
 echo $this->Form->Errors();
@@ -8,13 +9,13 @@ if ($this->InvitationCount > 0) {
 }
 if ($this->InvitationCount != 0) {
 ?>
-   <div class="Info"><?php echo T('Enter the email address of the person you would like to invite:'); ?></div>
+   <p><?php echo T('CallToInvite', 'Know someone who should join us?'); ?></p>
 <ul>
    <li>
    <?php
       echo $this->Form->Label('Email', 'Email');
       echo $this->Form->TextBox('Email');
-      echo ' ', $this->Form->Button('Invite');
+      echo ' ', $this->Form->Button('Send Invitation');
    ?></li>
 </ul>
 <?php
@@ -22,12 +23,12 @@ if ($this->InvitationCount != 0) {
 
 if ($this->InvitationData->NumRows() > 0) {
 ?>
-<table class="AltRows">
+<table class="AltRows PendingInvitations">
    <thead>
       <tr>
-         <th><?php echo T('Invitation Code'); ?></th>
          <th class="Alt"><?php echo T('Sent To'); ?></th>
          <th><?php echo T('On'); ?></th>
+         <th><?php echo T('Invitation Code', 'Code'); ?></th>
          <th class="Alt"><?php echo T('Status'); ?></th>
       </tr>
    </thead>
@@ -39,24 +40,21 @@ foreach ($this->InvitationData->Format('Text')->Result() as $Invitation) {
    $Alt = $Alt == TRUE ? FALSE : TRUE;
 ?>
    <tr<?php echo ($Alt ? ' class="Alt"' : ''); ?>>
-      <td><?php echo $Invitation->Code; ?></td>
       <td class="Alt"><?php
          if ($Invitation->AcceptedName == '')
             echo $Invitation->Email;
          else
-            echo Anchor($Invitation->AcceptedName, '/profile/'.$Invitation->AcceptedUserID);
-            
+            echo Anchor($Invitation->AcceptedName, '/profile/'.$Invitation->AcceptedUserID);         
+      ?></td>
+      <td><?php echo Gdn_Format::Date($Invitation->DateInserted); ?></td>
+      <td><?php echo $Invitation->Code; ?></td>
+      <td class="Alt"><?php
          if ($Invitation->AcceptedName == '') {
+            echo T('Pending');
             echo '<div>'
                .Anchor(T('Uninvite'), '/profile/uninvite/'.$Invitation->InvitationID.'/'.$Session->TransientKey(), 'Uninvite')
                .' | '.Anchor(T('Send Again'), '/profile/sendinvite/'.$Invitation->InvitationID.'/'.$Session->TransientKey(), 'SendAgain')
             .'</div>';
-         }
-      ?></td>
-      <td><?php echo Gdn_Format::Date($Invitation->DateInserted); ?></td>
-      <td class="Alt"><?php
-         if ($Invitation->AcceptedName == '') {
-            echo T('Pending');
          } else {
             echo T('Accepted');
          }
@@ -69,3 +67,4 @@ foreach ($this->InvitationData->Format('Text')->Result() as $Invitation) {
 <?php
 }
 echo $this->Form->Close();
+?></div>

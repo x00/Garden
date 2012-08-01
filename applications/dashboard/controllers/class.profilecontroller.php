@@ -1107,7 +1107,7 @@ class ProfileController extends Gdn_Controller {
          }
          
          // Show invitations?
-         if (C('Garden.Registration.Method') == 'Invitation')
+         if (C('Garden.Registration.Method') == 'Invitation' || C('Garden.Registration.AllowInvites', TRUE))
             $this->AddProfileTab(T('Invitations'), 'profile/invitations', 'InvitationsLink');
          
          $this->FireEvent('AddProfileTabs');
