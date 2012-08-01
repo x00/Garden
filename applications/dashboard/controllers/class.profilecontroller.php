@@ -307,6 +307,9 @@ class ProfileController extends Gdn_Controller {
     */
    public function Invitations($UserReference = '', $Username = '', $UserID = '') {
       $this->Permission('Garden.SignIn.Allow');
+      if (!C('Garden.Registration.AllowInvites', TRUE))
+         return;
+      
       $this->EditMode(FALSE);
       $this->GetUserInfo($UserReference, $Username, $UserID, $this->Form->AuthenticatedPostBack());
       $this->SetTabView('Invitations');

@@ -94,7 +94,7 @@ echo Gdn::Slice('/dashboard/role/defaultroleswarning');
       <div class="Info">
       <?php
          echo sprintf(T('Invitations can be sent from users\' profile pages.',
-            'When you use registration by invitation users will have a link called <a href="%s" class="Popup">My Invitations</a> on their profile pages.'),
+            'Users may track who they have invited using the <a href="%s">Invitations</a> link on their profile page.'),
             Url('/dashboard/profile/invitations')),
             '<br /><br />';
          
