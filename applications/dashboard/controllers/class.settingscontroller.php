@@ -745,11 +745,11 @@ class SettingsController extends DashboardController {
 
       // Options for how many invitations a role can send out per month.
       $this->InvitationOptions = array(
+         '-1' => T('Unlimited'),
          '0' => T('None'),
          '1' => '1',
          '2' => '2',
-         '5' => '5',
-         '-1' => T('Unlimited')
+         '5' => '5'
       );
       
       // Options for when invitations should expire.

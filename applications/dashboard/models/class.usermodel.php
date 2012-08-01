@@ -2312,7 +2312,7 @@ class UserModel extends Gdn_Model {
       // Get the Registration.InviteRoles settings:
       $InviteRoles = Gdn::Config('Garden.Registration.InviteRoles', array());
       if (!is_array($InviteRoles) || count($InviteRoles) == 0)
-         return 0;
+         return -1;
 
       // Build an array of roles that can send invitations
       $CanInviteRoles = array();
