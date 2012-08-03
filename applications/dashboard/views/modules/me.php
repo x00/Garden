@@ -53,6 +53,8 @@ if ($Session->IsValid()):
                // echo Wrap('<hr />', 'li');
                echo Wrap(Anchor(T('Edit Profile'), 'profile/edit'), 'li');
                
+               echo Wrap(Anchor(T('Send Invitation'), 'profile/invitations'), 'li');
+               
                if ($Session->CheckPermission('Garden.Settings.Manage') || $Session->CheckPermission('Garden.Moderation.Manage')) {
                   echo Wrap('<hr />', 'li');
                   $CApplicant = $ApplicantCount > 0 ? ' '.Wrap($ApplicantCount, 'span class="Alert"') : '';
