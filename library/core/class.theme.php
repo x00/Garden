@@ -317,6 +317,16 @@ class Gdn_Theme {
    }
 
    public static function Module($Name, $Properties = array()) {
+      if (isset($Properties['cache'])) {
+         $Cache = $Properties['cache'];
+         unset($Properties['cache']);
+         $CacheKey = "module.$Name.".serialize($Properties);
+         
+         $ModuleHtml = Gdn::Cache()->Get($CacheKey);
+         if ($ModuleHtml)
+            return $ModuleHtml;
+      }
+      
       try {
          if (!class_exists($Name)) {
             if (Debug())
@@ -338,6 +348,10 @@ class Gdn_Theme {
          else
             $Result = $Ex->getMessage();
       }
+      
+      if (isset($CacheKey))
+         Gdn::Cache()->Store($CacheKey, $Result, array(Gdn_Cache::FEATURE_EXPIRY => $Cache));
+      
       return $Result;
    }
    
