@@ -148,10 +148,6 @@ class CategoryModel extends Gdn_Model {
          $Category['CountAllComments'] = $Category['CountComments'];
          $Category['Url'] = self::CategoryUrl($Category, FALSE, '//');
          $Category['ChildIDs'] = array();
-         $Category['LastTitle'] = null;
-         $Category['LastUserID'] = null;
-         $Category['LastDiscussionUserID'] = null;
-         $Category['LastUrl'] = null;
          if (GetValue('Photo', $Category))
             $Category['PhotoUrl'] = Gdn_Upload::Url($Category['Photo']);
          else
@@ -345,7 +341,6 @@ class CategoryModel extends Gdn_Model {
    }
    
    public static function JoinRecentPosts(&$Data) {
-      return;
       $DiscussionIDs = array();
       $CommentIDs = array();
       $Joined = FALSE;
