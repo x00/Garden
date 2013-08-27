@@ -123,10 +123,17 @@ class UserController extends DashboardController {
       $this->AddSideMenu('dashboard/user');
       
       $RoleModel = new RoleModel();
-      $AllRoles = $RoleModel->GetArray();
+      $RoleData = $AllRoles = $RoleModel->GetArray();
+
+      // If not administrator, restrict to default registration roles.
+      if (!CheckPermission('Garden.Settings.Manage')) {
+         $DefaultRoleIDs = C('Garden.Registration.DefaultRoles', array(8));
+         $DefaultRoles = array_combine($DefaultRoleIDs, $DefaultRoleIDs);
+         $RoleData = array_intersect_key($AllRoles, $DefaultRoles);
+      }
       
       // By default, people with access here can freely assign all roles
-      $this->RoleData = $AllRoles;
+      $this->RoleData = $RoleData;
       
       $UserModel = new UserModel();
       $this->User = FALSE;
@@ -498,6 +505,13 @@ class UserController extends DashboardController {
       // By default, people with access here can freely assign all roles
       $RoleModel = new RoleModel();
       $RoleData = $AllRoles = $RoleModel->GetArray();
+
+      // If not administrator, restrict to default registration roles.
+      if (!CheckPermission('Garden.Settings.Manage')) {
+         $DefaultRoleIDs = C('Garden.Registration.DefaultRoles', array(8));
+         $DefaultRoles = array_combine($DefaultRoleIDs, $DefaultRoleIDs);
+         $RoleData = array_intersect_key($AllRoles, $DefaultRoles);
+      }
 
       $UserModel = new UserModel();
       $User = $UserModel->GetID($UserID, DATASET_TYPE_ARRAY);
